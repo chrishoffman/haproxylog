@@ -61,7 +61,7 @@ type Log struct {
 	CapturedResponseCookie  string
 	CapturedRequestHeaders  []string
 	CapturedResponseHeaders []string
-	HTTPRequest             *httpRequest
+	HTTPRequest             *HttpRequest
 	SslCipher               string
 	SslVersion              string
 
@@ -70,7 +70,7 @@ type Log struct {
 	Message  string
 }
 
-type httpRequest struct {
+type HttpRequest struct {
 	Method  string
 	URL     *url.URL
 	Version string

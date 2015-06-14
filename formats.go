@@ -67,12 +67,12 @@ func (l *Log) parseError() error {
 }
 
 func stringToHTTPRequestHook(f reflect.Type, t reflect.Type, v interface{}) (interface{}, error) {
-	if t == reflect.TypeOf(&httpRequest{}) {
+	if t == reflect.TypeOf(&HttpRequest{}) {
 		// Split "POST /relative/path HTTP/1.1"
 		parts := strings.Split(v.(string), " ")
 		if len(parts) == 3 {
 			u, _ := url.Parse(parts[1])
-			v = &httpRequest{Method: parts[0], URL: u, Version: parts[2]}
+			v = &HttpRequest{Method: parts[0], URL: u, Version: parts[2]}
 		}
 	}
 	return v, nil
