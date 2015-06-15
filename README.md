@@ -18,11 +18,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/chrishoffman/haproxy"
+	"github.com/chrishoffman/haproxylog"
 )
 
 func main() {
-	const rawLog = `192.168.9.185:56276 [29/May/2015:10:36:47.766] Service1 Service1/host-1 2/0/0 423 -- 282/36/0/0/0 0/0`
+	rawLog := `192.168.9.185:56276 [29/May/2015:10:36:47.766] Service1 Service1/host-1 2/0/0 423 -- 282/36/0/0/0 0/0`
 
 	log, err := haproxy.NewLog(rawLog)
 	if err != nil {
