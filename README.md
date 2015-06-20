@@ -1,4 +1,4 @@
-# haproxylog [![Build Status](https://travis-ci.org/chrishoffman/haproxylog.png)](https://travis-ci.org/chrishoffman/haproxylog)
+# haproxylog [![Build Status](https://travis-ci.org/chrishoffman/haproxylog.png)](https://travis-ci.org/chrishoffman/haproxylog) [![GoDoc](https://godoc.org/github.com/chrishoffman/haproxylog?status.svg)](https://godoc.org/github.com/chrishoffman/haproxylog)
 
 haproxylog is a go library that parses [haproxy](http://www.haproxy.org/) log messages.
 
