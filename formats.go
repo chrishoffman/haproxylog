@@ -69,10 +69,13 @@ func (l *Log) parseError() error {
 func stringToHTTPRequestHook(f reflect.Type, t reflect.Type, v interface{}) (interface{}, error) {
 	if t == reflect.TypeOf(&HttpRequest{}) {
 		// Split "POST /relative/path HTTP/1.1"
-		parts := strings.Split(v.(string), " ")
+		vStr := v.(string)
+		parts := strings.Split(vStr, " ")
 		if len(parts) == 3 {
 			u, _ := url.Parse(parts[1])
 			v = &HttpRequest{Method: parts[0], URL: u, Version: parts[2]}
+		} else if vStr == "<BADREQ>" {
+			v = &HttpRequest{}
 		}
 	}
 	return v, nil

@@ -60,6 +60,13 @@ func Test_HTTPLogHttpRequestDecodeError_ReturnsError(t *testing.T) {
 	assert.NotNil(t, err, "Invalid log line returns an error")
 }
 
+func Test_HTTPLogHttpRequestBadReq_ReturnsLog(t *testing.T) {
+	const haproxyLog = `192.168.9.185:56276 [29/May/2015:10:36:47.766] Service1~ Service1/host-1 2/0/0/10/12 200 423 - - ---- 282/36/0/0/0 0/0 {d7d9b784-4276-42bc-ae79-71e9e84d2b85} {d7d9b784-4276-42bc-ae79-71e9e84d2b85} "<BADREQ>" ECDHE-RSA-AES128-GCM-SHA256/TLSv1.2`
+	log, err := haproxy.NewLog(haproxyLog)
+	assert.NotNil(t, log, "log returns HaproxyHTTPLog")
+	assert.Nil(t, err, "No error return")
+}
+
 func Test_TCPLog_ReturnsLog(t *testing.T) {
 	const haproxyLog = `192.168.9.185:56276 [29/May/2015:10:36:47.766] Service1 Service1/host-1 2/0/0 423 -- 282/36/0/0/0 0/0`
 	log, err := haproxy.NewLog(haproxyLog)
