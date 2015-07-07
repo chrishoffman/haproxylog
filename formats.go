@@ -54,7 +54,7 @@ func (l *Log) parseTCP() error {
 	return l.parseType(tcpLogRegexp, stringToTimeHook)
 }
 
-// This represents the default TCP format
+// This represents the default Error format
 // log-format %ci:%cp\ [%t]\ %ft\ %b/%s\ %Tw/%Tc/%Tt\ %B\ %ts\ %ac/%fc/%bc/%sc/%rc\ %sq/%bq
 var errorLogRegexp = &myRegexp{
 	regexp.MustCompile(`(?P<ClientIp>(\d{1,3}\.){3}\d{1,3}):(?P<ClientPort>\d{1,5}) ` +
