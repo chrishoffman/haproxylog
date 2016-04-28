@@ -13,7 +13,7 @@ import (
 // This represents the default HTTP format and adds additional optional SSL information. Both the default and the modified version work.
 // log-format %ci:%cp\ [%t]\ %ft\ %b/%s\ %Tq/%Tw/%Tc/%Tr/%Tt\ %ST\ %B\ %CC\ \%CS\ %tsc\ %ac/%fc/%bc/%sc/%rc\ %sq/%bq\ %hr\ %hs\ %{+Q}r\ %sslc/%sslv
 var httpLogRegexp = &myRegexp{
-	regexp.MustCompile(`(?P<ClientIp>(\d{1,3}\.){3}\d{1,3}):(?P<ClientPort>\d{1,5}) ` +
+	regexp.MustCompile(`(?P<ClientIp>[a-f0-9:\.]+):(?P<ClientPort>\d{1,5}) ` +
 		`\[(?P<AcceptDate>\d{2}/\w{3}/\d{4}(:\d{2}){3}\.\d{3})\] ` +
 		`(?P<FrontendName>\S+) (?P<BackendName>[\w-\.]+)/(?P<ServerName>\S+) ` +
 		`(?P<Tq>(-1|\d+))/(?P<Tw>(-1|\d+))/(?P<Tc>(-1|\d+))/` +
@@ -41,7 +41,7 @@ func (l *Log) parseHTTP() error {
 // This represents the default TCP format
 // log-format %ci:%cp\ [%t]\ %ft\ %b/%s\ %Tw/%Tc/%Tt\ %B\ %ts\ %ac/%fc/%bc/%sc/%rc\ %sq/%bq
 var tcpLogRegexp = &myRegexp{
-	regexp.MustCompile(`(?P<ClientIp>(\d{1,3}\.){3}\d{1,3}):(?P<ClientPort>\d{1,5}) ` +
+	regexp.MustCompile(`(?P<ClientIp>[a-f0-9:\.]+):(?P<ClientPort>\d{1,5}) ` +
 		`\[(?P<AcceptDate>\d{2}/\w{3}/\d{4}(:\d{2}){3}\.\d{3})\] ` +
 		`(?P<FrontendName>\S+) (?P<BackendName>[\w-\.]+)/(?P<ServerName>\S+) ` +
 		`(?P<Tw>(-1|\d+))/(?P<Tc>(-1|\d+))/(?P<Tt>\+?\d+) ` +
@@ -57,7 +57,7 @@ func (l *Log) parseTCP() error {
 // This represents the default Error format
 // log-format %ci:%cp\ [%t]\ %ft\ %b/%s\ %Tw/%Tc/%Tt\ %B\ %ts\ %ac/%fc/%bc/%sc/%rc\ %sq/%bq
 var errorLogRegexp = &myRegexp{
-	regexp.MustCompile(`(?P<ClientIp>(\d{1,3}\.){3}\d{1,3}):(?P<ClientPort>\d{1,5}) ` +
+	regexp.MustCompile(`(?P<ClientIp>[a-f0-9:\.]+):(?P<ClientPort>\d{1,5}) ` +
 		`\[(?P<AcceptDate>\d{2}/\w{3}/\d{4}(:\d{2}){3}\.\d{3})\] ` +
 		`(?P<FrontendName>[\w-\.]+)/(?P<BindName>[\w-\.]+): ` +
 		`(?P<Message>.*)`)}
