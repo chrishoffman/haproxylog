@@ -26,6 +26,15 @@ func Test_HTTPLog_ReturnsLog(t *testing.T) {
 	assert.Equal(t, int64(200), log.HTTPStatusCode, "HTTP Status Code is 200")
 }
 
+func Test_HTTPIPv6Log_ReturnsLog(t *testing.T) {
+	haproxyLog := `2a00:1450:4010:c0b::71:56276 [29/May/2015:10:36:47.766] Service1~ Service1/host-1 2/0/0/10/12 200 423 - - ---- 282/36/0/0/0 0/0 {d7d9b784-4276-42bc-ae79-71e9e84d2b85} {d7d9b784-4276-42bc-ae79-71e9e84d2b85} "POST /path/to/app HTTP/1.1" ECDHE-RSA-AES128-GCM-SHA256/TLSv1.2`
+
+	log, err := haproxy.NewLog(haproxyLog)
+	assert.Nil(t, err, "No error return")
+	assert.Equal(t, "2a00:1450:4010:c0b::71", log.ClientIP, "IPv6 ClientIP address matches log")
+	assert.Equal(t, int64(56276), log.ClientPort, "ClientPort address matches log")
+}
+
 func Test_HTTPLogNoResponseHeaders_ReturnsLog(t *testing.T) {
 	haproxyLog := `192.168.9.185:56276 [29/May/2015:10:36:47.766] Service1~ Service1/host-1 2/0/0/10/12 200 423 - - ---- 282/36/0/0/0 0/0 {d7d9b784-4276-42bc-ae79-71e9e84d2b85} "POST /path/to/app HTTP/1.1" ECDHE-RSA-AES128-GCM-SHA256/TLSv1.2`
 
@@ -76,6 +85,14 @@ func Test_TCPLog_ReturnsLog(t *testing.T) {
 	assert.Equal(t, log.ServerName, "host-1")
 }
 
+func Test_TCPIPv6Log_ReturnsLog(t *testing.T) {
+	haproxyLog := `2a02:6b8::3:56276 [29/May/2015:10:36:47.766] Service1 Service1/host-1 2/0/0 423 -- 282/36/0/0/0 0/0`
+	log, err := haproxy.NewLog(haproxyLog)
+	assert.Nil(t, err, "No Error")
+	assert.Equal(t, "2a02:6b8::3", log.ClientIP, "IPv6 ClientIP address matches log")
+	assert.Equal(t, int64(56276), log.ClientPort, "ClientPort address matches log")
+}
+
 func Test_ErrorLog_ReturnsLog(t *testing.T) {
 	haproxyLog := `192.168.9.185:56276 [29/May/2015:10:36:47.766] Service1/bind-1: We have a problem here`
 	log, err := haproxy.NewLog(haproxyLog)
@@ -83,6 +100,14 @@ func Test_ErrorLog_ReturnsLog(t *testing.T) {
 	assert.Nil(t, err, "No Error")
 	assert.Equal(t, log.GetFormat(), haproxy.Error)
 	assert.Equal(t, log.Message, "We have a problem here")
+}
+
+func Test_ErrorIPv6Log_ReturnsLog(t *testing.T) {
+	haproxyLog := `2a00:1450:4010:c02::8d:56276 [29/May/2015:10:36:47.766] Service1/bind-1: We have a problem here`
+	log, err := haproxy.NewLog(haproxyLog)
+	assert.Nil(t, err, "No Error")
+	assert.Equal(t, "2a00:1450:4010:c02::8d", log.ClientIP, "IPv6 ClientIP address matches log")
+	assert.Equal(t, int64(56276), log.ClientPort, "ClientPort address matches log")
 }
 
 func Test_MatchHTTPLogSignatureRegexpFails_ReturnsError(t *testing.T) {
