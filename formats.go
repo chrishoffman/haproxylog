@@ -18,7 +18,7 @@ var httpLogRegexp = &myRegexp{
 		`(?P<FrontendName>\S+) (?P<BackendName>[\w-\.]+)/(?P<ServerName>\S+) ` +
 		`(?P<Tq>(-1|\d+))/(?P<Tw>(-1|\d+))/(?P<Tc>(-1|\d+))/` +
 		`(?P<Tr>(-1|\d+))/(?P<Tt>\+?\d+) ` +
-		`(?P<HTTPStatusCode>\d{3}) (?P<BytesRead>\d+) ` +
+		`(?P<HTTPStatusCode>(-1|\d{3})) (?P<BytesRead>\d+) ` +
 		`(?P<CapturedRequestCookie>\S+) (?P<CapturedResponseCookie>\S+) ` +
 		`(?P<TerminationState>[\w-]{4}) ` +
 		`(?P<ActConn>\d+)/(?P<FeConn>\d+)/(?P<BeConn>\d+)/` +
